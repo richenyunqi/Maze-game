@@ -54,11 +54,15 @@
 6. 声音设置按钮：即指定是否开启背景音乐的按钮，在用户进行游戏的状态和计算机进行游戏的状态两种状态下均可使用。
 ### 迷宫主界面模块
 本游戏软件刚刚运行时刻，迷宫主界面模块的显示图如下图所示：
+
 ![本游戏软件刚刚运行时刻，迷宫主界面模块的显示图](https://img-blog.csdnimg.cn/20181225152310967.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
+
 整个迷宫使用大量的方格（正方形）进行显示，其中，可行走的路径用白色方格显示，不可行走的路径即障碍物用黑色方格表示，出口用红色方格表示，用户用于行走的标识用绿色小球（圆形）表示。用户通过键盘上上下左右的方向键操纵小球在迷宫主界面上运动。
 参数设计模块中的ROWS（即迷宫行数）、COLS（即迷宫列数）在迷宫主界面的表示分别指的是迷宫主界面中每行、每列方格的数量，参数设计模块中的Lattice’s width（即组成迷宫的格子的宽度）在迷宫主界面的表示是迷宫主界面中每个方格的宽。此外，在迷宫主界面模块的正上方，存在统计用户进行游戏的当前时刻的所用时间和所走步数的计时器和计步器。
 ### 迷宫整体界面
+
 ![迷宫游戏界面](https://img-blog.csdnimg.cn/20181225153650242.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
+
 # 软件设计方案
 ## 软件相关原理说明
 要设计一款迷宫的游戏软件，其中最主要也是必须要解决的两大主要问题就是如何去生成一个随机的迷宫以及如何在一个随机生成的迷宫中找到从迷宫入口到迷宫出口的路径。在图论中，这两个问题的表示就是：
@@ -89,7 +93,9 @@
           2. 令其成为当前迷宫单元 
 #### 生成的迷宫特点
 一般来说，Depth First Search Algorithm生成的迷宫极度扭曲，有着一条明显的主路。生成的51行51列迷宫如下图所示：
+
 ![由Depth First Search Algorithm生成的51行51列迷宫](https://img-blog.csdnimg.cn/20181225153133563.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
+
 ### Randomized Prim's Algorithm（随机普利姆算法）
 #### 算法描述
 1. 让迷宫全是墙.  
@@ -101,7 +107,9 @@
     2. 如果墙两面的单元格都已经被访问过，那就从列表里移除这面墙
 #### 生成的迷宫特点
 相对于深度优先的算法，Randomized Prim's Algorithm不是优先选择最近选中的单元格，而是随机的从所有的列表中的单元格进行选择，新加入的单元格和旧加入的单元格同样概率会被选择，新加入的单元格没有优先权。因此其分支更多，生成的迷宫更复杂，岔路更多，难度更大，也更自然。生成的51行51列迷宫如下图所示：
+
 ![由Randomized Prim's Algorithm生成的51行51列迷宫](https://img-blog.csdnimg.cn/20181225153207186.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
+
 ### Recursive Division Algorithm（递归分割算法）
 #### 算法描述
 1. 让迷宫全是迷宫单元
@@ -110,7 +118,9 @@
 4. 如果子迷宫仍可分割成四个子迷宫，返回1. 继续分割子迷宫
 #### 生成的迷宫特点
 Recursive Division Algorithm十分高效，生成的迷宫较为简单，有点像四叉树，直路多且不扭曲。生成的51行51列迷宫如下图所示：
+
 ![由Recursive Division Algorithm生成的51行51列迷宫](https://img-blog.csdnimg.cn/2018122515323874.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
+
 ## 迷宫寻路算法
 由于迷宫相当于连通图，所以通过使用图论算法中由任意一点出发遍历整个连通图的其他所有顶点的遍历算法即可找到一条从迷宫入口到迷宫出口的路径，本游戏软件使用的是目前应用最为广泛的Depth First Search Algorithm（深度优先搜索算法）和Breadth First Search Algorithm（广度优先搜索算法）。注意，此时迷宫中所有可行走的点均视为迷宫单元，所有不可行走的点均视为墙壁。
 ### Depth First Search Algorithm（深度优先搜索算法）
@@ -122,7 +132,10 @@ Recursive Division Algorithm十分高效，生成的迷宫较为简单，有点�
 5. 重复第3、4步，直至搜索到出口顶点
 #### 生成的路径特点：
 Depth First Search Algorithm 在由Recursive Division Algorithm生成的51行51列迷宫中生成的路径如下图所示：
-![Depth First Search Algorithm生成的路径](https://img-blog.csdnimg.cn/20181225153459916.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
+
+![Depth First Search Algorithm生成的路径](https://img-blog.csdnimg.cn/20181225153459916.png?x-oss-
+process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
+
 ### Breadth First Search Algorithm（广度优先搜索算法）
 #### 算法描述
 1. 访问入口顶点v，并以此顶点为当前顶点
@@ -132,5 +145,6 @@ Depth First Search Algorithm 在由Recursive Division Algorithm生成的51行51�
 5. 重复第3、4步，直至搜索到出口顶点
 #### 生成的路径特点：
  Breadth First Search Algorithm 在由Recursive Division Algorithm生成的51行51列迷宫中生成的路径如下图所示：
+ 
  ![Breadth First Search Algorithm生成的路径](https://img-blog.csdnimg.cn/20181225153603624.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
-
+ 
