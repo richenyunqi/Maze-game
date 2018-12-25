@@ -12,29 +12,39 @@
  - COLS（即迷宫列数，默认设置为奇数，最小值为11，最大值为99，默认值为11）；
  - Lattice’s width（即组成迷宫的格子的宽度，迷宫格子默认设置为正方形，指定了迷宫格子的宽度相当于指定了迷宫格子的大小，默认设置为自然数，最小值为5，最大值为30，默认值为15）。
 这些参数设置的显示图下图所示：
+
 ![参数设置图](https://img-blog.csdnimg.cn/201812251512198.png)
+
 2. 迷宫创建算法相关参数
 本游戏中创建一个迷宫的算法有三种：
  - Depth First Search Algorithm（深度优先搜索算法）
  - Randomized Prim's Algorithm（随机普利姆算法）
  - Recursive Division Algorithm（递归分割算法）。
 用户需在同时也只能在这三种迷宫创建算法中任意选择一种，默认选择的迷宫创建算法为Depth First Search Algorithm（深度优先搜索算法）。迷宫创建算法相关参数的显示图如下图所示：
+
 ![迷宫创建算法相关参数设置图](https://img-blog.csdnimg.cn/20181225151342642.png)
+
 3. 迷宫寻路算法相关参数
 本游戏中走出一个迷宫的迷宫寻路算法有两种：
  - Depth First Search Algorithm（深度优先搜索算法）
  - Breadth First Search Algorithm（广度优先搜索算法）。
 用户需在同时也只能在这两种迷宫创建算法中任意选择一种，默认选择的迷宫创建算法为Depth First Search Algorithm（深度优先搜索算法）。迷宫寻路算法相关参数的显示图如下图所示：
+
 ![迷宫寻路算法相关参数设置图](https://img-blog.csdnimg.cn/2018122515142879.png)
+
 4. 整个参数设置模块的显示图如下图所示：
+
 ![参数设置模块的显示图](https://img-blog.csdnimg.cn/20181225151510164.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
+
 ### 按钮功能模块
 本游戏中，按进行游戏的主体不同共设计两个游戏状态：
  - 用户进行游戏的状态
  - 计算机进行游戏的状态
 
 本游戏软件刚刚运行时刻，按钮功能模块的显示图如下图所示：
+
 ![游戏软件刚刚运行时刻，按钮功能模块的显示图](https://img-blog.csdnimg.cn/20181225151958428.png)
+
 该模块涉及到的游戏功能按钮及相关的适用状态有以下六种：
 1. Restart按钮：即重新开始游戏按钮，在用户进行游戏的状态和计算机进行游戏的状态两种状态下均可使用。点击该按钮，当前所有正在进行的游戏行为都立刻被终止，程序使用参数设置模块的相关参数——用户选中的迷宫创建算法按照用户选择的迷宫行列数创建一个新的迷宫，并以用户选择的格子宽度显示在游戏界面上。
 2. Pause/Continue按钮：即暂停/继续按钮，只能在用户进行游戏的状态下才能使用。在用户进行游戏的状态下，点击Pause按钮，当前迷宫游戏被暂停，游戏计时器、游戏计步器被停止，按钮上的Pause文字被立刻替换成Continue文字；当用户点击Continue按钮时，被暂停的迷宫游戏可以继续进行，游戏计时器、游戏计步器也在被停止的地方再次开始，按钮上的Continue文字被立刻替换成Pause文字。
