@@ -140,8 +140,7 @@ Recursive Division Algorithm十分高效，生成的迷宫较为简单，有点�
 #### 生成的路径特点：
 Depth First Search Algorithm 在由Recursive Division Algorithm生成的51行51列迷宫中生成的路径如下图所示：
 
-![Depth First Search Algorithm生成的路径](https://img-blog.csdnimg.cn/20181225153459916.png?x-oss-
-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
+![Depth First Search Algorithm生成的路径](https://img-blog.csdnimg.cn/20181225153459916.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70)
 
 ### Breadth First Search Algorithm（广度优先搜索算法）
 #### 算法描述
