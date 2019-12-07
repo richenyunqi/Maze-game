@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.Stack;
 
 abstract class AbstractCreateMaze {
-	// éªŒè¯æ¨ªçºµåæ ‡æ˜¯å¦è¶…ç•Œ
+	// ÑéÖ¤ºá×İ×ø±êÊÇ·ñ³¬½ç
 	protected boolean isOutofBorder(int x, int y, int colNumber, int rowNumber) {
 		if ((x == 0 && y == 1) || (x == colNumber + 1 && y == rowNumber))
 			return false;
@@ -21,10 +21,10 @@ abstract class AbstractCreateMaze {
 
 class DepthFirstSearchCreateMaze extends AbstractCreateMaze {
 
-	// éšæœºé€‰æ‹©ä¸€ä¸ªpç‚¹æœªè®¿é—®çš„ç›¸é‚»è¿·å®«å•å…ƒ ,å¹¶ç§»é™¤ä¸¤è€…ä¹‹é—´çš„å¢™ï¼Œä¸ºcreateMaze()å‡½æ•°è°ƒç”¨
+	// Ëæ»úÑ¡ÔñÒ»¸öpµãÎ´·ÃÎÊµÄÏàÁÚÃÔ¹¬µ¥Ôª ,²¢ÒÆ³ıÁ½ÕßÖ®¼äµÄÇ½£¬ÎªcreateMaze()º¯Êıµ÷ÓÃ
 	protected Point ArroundPoint(Lattice[][] mazeLattice, Point p, Stack<Point> s, Random rand, int colNumber,
 			int rowNumber) {
-		final int[] arroundPoint = { -2, 0, 2, 0, -2 };// ä¸€ä¸ªç‚¹å‘¨å›´å››ä¸ªç‚¹çš„åæ ‡å˜åŒ–ï¼Œé¡ºåºä¸ºå·¦ä¸Šå³ä¸‹
+		final int[] arroundPoint = { -2, 0, 2, 0, -2 };// Ò»¸öµãÖÜÎ§ËÄ¸öµãµÄ×ø±ê±ä»¯£¬Ë³ĞòÎª×óÉÏÓÒÏÂ
 		int r = rand.nextInt(4);
 		for (int i = 0; i < 4; ++i) {
 			int j = r % 4;
@@ -64,10 +64,10 @@ class DepthFirstSearchCreateMaze extends AbstractCreateMaze {
 
 class RandomizedPrimCreateMaze extends AbstractCreateMaze {
 
-	// å°†ç‚¹pçš„é‚»å¢™æ”¾å…¥åˆ—è¡¨ä¸­
+	// ½«µãpµÄÁÚÇ½·ÅÈëÁĞ±íÖĞ
 	protected void pushArroundWallToList(Lattice[][] mazeLattice, Point p, List<Point> list, int colNumber,
 			int rowNumber) {
-		final int[] arroundWall = { -1, 0, 1, 0, -1 };// ä¸€ä¸ªç‚¹å‘¨å›´å››ä¸ªå¢™çš„åæ ‡å˜åŒ–ï¼Œé¡ºåºä¸ºå·¦ä¸Šå³ä¸‹
+		final int[] arroundWall = { -1, 0, 1, 0, -1 };// Ò»¸öµãÖÜÎ§ËÄ¸öÇ½µÄ×ø±ê±ä»¯£¬Ë³ĞòÎª×óÉÏÓÒÏÂ
 		for (int i = 0; i < 4;) {
 			int x = p.x + arroundWall[i];
 			int y = p.y + arroundWall[++i];
@@ -77,9 +77,9 @@ class RandomizedPrimCreateMaze extends AbstractCreateMaze {
 		}
 	}
 
-	// æ‰¾åˆ°å¢™wallæœªè¢«è®¿é—®è¿‡çš„ç‚¹ï¼Œå¦‚æœæ²¡æœ‰è¿”å›Null
+	// ÕÒµ½Ç½wallÎ´±»·ÃÎÊ¹ıµÄµã£¬Èç¹ûÃ»ÓĞ·µ»ØNull
 	protected Point findPoint(Point wall, Lattice[][] mazeLattice) {
-		final int[] arroundWall = { -1, 0, 1, 0, -1 };// é¡ºåºä¸ºå·¦ä¸Šå³ä¸‹
+		final int[] arroundWall = { -1, 0, 1, 0, -1 };// Ë³ĞòÎª×óÉÏÓÒÏÂ
 		Point p = null;
 		for (int i = (wall.y + 1) % 2; i < 2; i += 2) {
 			boolean add = mazeLattice[wall.y + arroundWall[i + 1]][wall.x + arroundWall[i]].isPassable(),
@@ -120,14 +120,14 @@ class RandomizedPrimCreateMaze extends AbstractCreateMaze {
 
 class RecursiveDivisionCreateMaze extends AbstractCreateMaze {
 
-	// éšæœºåœ¨ç»™å®šå¢™å£ä¸Šå¼€ä¸€ä¸ªé—¨
+	// Ëæ»úÔÚ¸ø¶¨Ç½±ÚÉÏ¿ªÒ»¸öÃÅ
 	protected void openAdoor(Lattice[][] mazeLattice, Point p1, Point p2, Random r) {
 		if(p1.y==p2.y&&p1.x==p2.x){
 			mazeLattice[p1.y][p1.x].setPassable(true);
 			return;
 		}
 		if (p1.y == p2.y) {
-			int pos = p1.x + r.nextInt((p2.x - p1.x) / 2 ) * 2;// åœ¨å¥‡æ•°ä½ç½®å¼€é—¨
+			int pos = p1.x + r.nextInt((p2.x - p1.x) / 2 ) * 2;// ÔÚÆæÊıÎ»ÖÃ¿ªÃÅ
 			mazeLattice[p1.y][pos].setPassable(true);
 		} else if (p1.x == p2.x) {
 			int pos = p1.y + r.nextInt((p2.y - p1.y) / 2 ) * 2;
@@ -135,19 +135,19 @@ class RecursiveDivisionCreateMaze extends AbstractCreateMaze {
 		}
 	}
 
-	// é€’å½’ç”Ÿæˆè¿·å®«
+	// µİ¹éÉú³ÉÃÔ¹¬
 	private void recursiveCreateMaze(Lattice[][] mazeLattice, Point start, int height, int width, Random rand) {
 		if (height <= 2 || width <= 2)
 			return;
-		// åœ¨å¶æ•°è¡Œå»ºç«‹ä¸€æ¡å¢™å£
+		// ÔÚÅ¼ÊıĞĞ½¨Á¢Ò»ÌõÇ½±Ú
 		int drawx = start.y + rand.nextInt(height / 2) * 2 + 1;
 		for (int i = start.x; i < start.x + width; ++i)
 			mazeLattice[drawx][i].setPassable(false);
-		// åœ¨å¶æ•°åˆ—å»ºç«‹ä¸€æ¡å¢™å£
+		// ÔÚÅ¼ÊıÁĞ½¨Á¢Ò»ÌõÇ½±Ú
 		int drawy = start.x + rand.nextInt(width / 2) * 2 + 1;
 		for (int i = start.y; i < start.y + height; ++i)
 			mazeLattice[i][drawy].setPassable(false);
-		// ä»å·¦ä¾§å¢™å£å¼€å§‹æŒ‰é€†æ—¶é’ˆé¡ºåºéšæœºåœ¨å››ä¸ªå¢™å£ä¸Šå¼€ä¸‰ä¸ªé—¨ï¼Œå·¦ä¾§å¢™å£è®°ä¸º1
+		// ´Ó×ó²àÇ½±Ú¿ªÊ¼°´ÄæÊ±ÕëË³ĞòËæ»úÔÚËÄ¸öÇ½±ÚÉÏ¿ªÈı¸öÃÅ£¬×ó²àÇ½±Ú¼ÇÎª1
 		int opendoor =  rand.nextInt(4)+ 1;
 		switch (opendoor) {
 		case 1:
@@ -173,13 +173,13 @@ class RecursiveDivisionCreateMaze extends AbstractCreateMaze {
 		default:
 			break;
 		}
-		// å·¦ä¸Šè§’
+		// ×óÉÏ½Ç
         recursiveCreateMaze(mazeLattice, start,drawx-start.y, drawy-start.x, rand);
-        // å³ä¸Šè§’
+        // ÓÒÉÏ½Ç
         recursiveCreateMaze(mazeLattice, new Point(drawy+1,start.y),drawx-start.y, width-drawy+start.x-1, rand);
-        // å·¦ä¸‹è§’
+        // ×óÏÂ½Ç
         recursiveCreateMaze(mazeLattice, new Point(start.x,drawx+1),height - drawx + start.y - 1, drawy-start.x, rand);
-        // å³ä¸‹è§’
+        // ÓÒÏÂ½Ç
         recursiveCreateMaze(mazeLattice,new Point(drawy+1,drawx+1),height - drawx + start.y - 1, width-drawy+start.x-1, rand);
 	}
 

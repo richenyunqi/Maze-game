@@ -1,40 +1,30 @@
 package maze;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.Panel;
-import java.awt.Toolkit;
-import java.awt.Button;
 import java.awt.Font;
-import java.awt.Label;
-import java.awt.Color;
-import java.awt.Window.Type;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.ParseException;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JSpinner.DefaultEditor;
-
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
-import javax.swing.border.EtchedBorder;
-import java.awt.event.ActionListener;
+import java.awt.Panel;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import javax.swing.event.ChangeListener;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 class MazeFrame extends JFrame {
 	private static final char DepthFirstSearchSolveMaze = 0;
@@ -48,7 +38,7 @@ class MazeFrame extends JFrame {
 	private JPanel contentPane;
 	private Maze maze;
 	private boolean isPause = false;
-	private boolean bgmStart=true;
+	private boolean bgmStart = true;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private Panel panel;
@@ -91,7 +81,7 @@ class MazeFrame extends JFrame {
 	private JRadioButton rdbtnDepthFirstSearch;
 	private JRadioButton rdbtnBreadthFirstSearch;
 	private ButtonGroup solveMazeButton = new ButtonGroup();
-	
+
 	/**
 	 * Create the frame.
 	 */
@@ -122,7 +112,6 @@ class MazeFrame extends JFrame {
 		panel_4.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel_3.add(panel_4, BorderLayout.SOUTH);
 
-		
 		button_4 = new JButton("GO");
 		button_4.addMouseListener(new MouseAdapter() {
 			@Override
@@ -134,9 +123,9 @@ class MazeFrame extends JFrame {
 				button_2.setEnabled(false);
 				button_3.setEnabled(true);
 				prompt.setEnabled(true);
-				int col=Integer.parseInt(spinner_2.getValue().toString());
-				int row=Integer.parseInt(spinner.getValue().toString());
-				if (maze.getColNumber() == col&& maze.getRowNumber() == row) {
+				int col = Integer.parseInt(spinner_2.getValue().toString());
+				int row = Integer.parseInt(spinner.getValue().toString());
+				if (maze.getColNumber() == col && maze.getRowNumber() == row) {
 					if (getCreateMaze() != maze.getCreateMaze()) {
 						maze.setCreateMaze(getCreateMaze());
 						maze.createMaze();
@@ -205,8 +194,9 @@ class MazeFrame extends JFrame {
 		JFormattedTextField textField = ((JSpinner.NumberEditor) spinner.getEditor()).getTextField();
 		textField.setEditable(false);
 		spinner.addChangeListener(new ChangeListener() {
+			@Override
 			public void stateChanged(ChangeEvent e) {
-				 
+
 			}
 		});
 		panel_8.add(spinner);
@@ -222,7 +212,7 @@ class MazeFrame extends JFrame {
 
 		spinner_2 = new JSpinner();
 		spinner_2.setModel(new SpinnerNumberModel(11, 11, 99, 2));
-		// 鎺у埗杈撳叆
+		// 控制输入
 		editor = new JSpinner.NumberEditor(spinner_2, "0");
 		spinner_2.setEditor(editor);
 		textField = ((JSpinner.NumberEditor) spinner_2.getEditor()).getTextField();
@@ -238,9 +228,9 @@ class MazeFrame extends JFrame {
 		lblLatticesWidth = new JLabel("Lattices' width: ");
 		panel_9.add(lblLatticesWidth);
 
-		
 		spinner_1 = new JSpinner();
 		spinner_1.addChangeListener(new ChangeListener() {
+			@Override
 			public void stateChanged(ChangeEvent e) {
 				maze.setLatticeWidth(Integer.parseInt(spinner_1.getValue().toString()));
 				maze.repaint();
@@ -264,6 +254,7 @@ class MazeFrame extends JFrame {
 
 		rdbtnNewRadioButton = new JRadioButton("Depth First Search Algorithm");
 		rdbtnNewRadioButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setCreateMaze(DepthFirstSearchCreateMaze);
 			}
@@ -272,6 +263,7 @@ class MazeFrame extends JFrame {
 
 		rdbtnNewRadioButton_1 = new JRadioButton("Randomized Prim's Algorithm");
 		rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setCreateMaze(RandomizedPrimCreateMaze);
 			}
@@ -280,6 +272,7 @@ class MazeFrame extends JFrame {
 
 		rdbtnNewRadioButton_2 = new JRadioButton("Recursive Division Algorithm");
 		rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setCreateMaze(RecursiveDivisionCreateMaze);
 			}
@@ -301,6 +294,7 @@ class MazeFrame extends JFrame {
 
 		rdbtnDepthFirstSearch = new JRadioButton("Depth First Search Algorithm");
 		rdbtnDepthFirstSearch.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setSolveMaze(DepthFirstSearchSolveMaze);
 			}
@@ -309,6 +303,7 @@ class MazeFrame extends JFrame {
 
 		rdbtnBreadthFirstSearch = new JRadioButton("Breadth First Search Algorithm");
 		rdbtnBreadthFirstSearch.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setSolveMaze(BreadthFirstSearchSolveMaze);
 			}
@@ -329,7 +324,7 @@ class MazeFrame extends JFrame {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(isBgmStart())
+				if (isBgmStart())
 					maze.setAudioThreadStart();
 				maze.init();
 				maze.createMaze();
@@ -380,7 +375,7 @@ class MazeFrame extends JFrame {
 		button_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (button_2.isEnabled()&&maze.isComputerDo()) {
+				if (button_2.isEnabled() && maze.isComputerDo()) {
 					maze.setComputerDo(false);
 					button_3.setEnabled(true);
 					button_2.setEnabled(false);
@@ -401,7 +396,7 @@ class MazeFrame extends JFrame {
 		button_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (button_3.isEnabled() && !maze.isComputerDo()&& maze.computerSolveMaze()) {
+				if (button_3.isEnabled() && !maze.isComputerDo() && maze.computerSolveMaze()) {
 					button_2.setEnabled(true);
 					button_3.setEnabled(false);
 					button_1.setEnabled(false);
@@ -416,11 +411,10 @@ class MazeFrame extends JFrame {
 		bgm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(isBgmStart()){
+				if (isBgmStart()) {
 					maze.setAudioThreadStop();
 					bgm.setIcon(new ImageIcon(System.getProperty("user.dir") + "/media//bgmClose.JPG"));
-				}
-				else{
+				} else {
 					maze.setAudioThreadStart();
 					bgm.setIcon(new ImageIcon(System.getProperty("user.dir") + "/media//bgmStart.JPG"));
 				}
@@ -428,7 +422,7 @@ class MazeFrame extends JFrame {
 			}
 		});
 		panel.add(bgm);
-		
+
 		solveMazeButton.add(rdbtnDepthFirstSearch);
 		solveMazeButton.add(rdbtnBreadthFirstSearch);
 		rdbtnDepthFirstSearch.setSelected(true);
@@ -440,14 +434,15 @@ class MazeFrame extends JFrame {
 
 		maze.requestFocus();
 	}
+
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
 			MazeFrame mazeFrame = new MazeFrame(11, 11);
-			Toolkit tool=mazeFrame.getToolkit(); //寰楀埌涓�涓猅oolkit瀵硅薄
-			Image myimage=tool.getImage(System.getProperty("user.dir") + "/media//maze.jpg"); //鐢眛ool鑾峰彇鍥惧儚
+			Toolkit tool = mazeFrame.getToolkit(); // 得到一个Toolkit对象
+			Image myimage = tool.getImage(System.getProperty("user.dir") + "/media//maze.jpg"); // 由tool获取图像
 			mazeFrame.setIconImage(myimage);
 			mazeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			mazeFrame.setVisible(true);
@@ -466,8 +461,7 @@ class MazeFrame extends JFrame {
 	}
 
 	/**
-	 * @param isPause
-	 *            the isPause to set
+	 * @param isPause the isPause to set
 	 */
 	public void setPause(boolean isPause) {
 		this.isPause = isPause;
@@ -481,8 +475,7 @@ class MazeFrame extends JFrame {
 	}
 
 	/**
-	 * @param solveMaze
-	 *            the solveMaze to set
+	 * @param solveMaze the solveMaze to set
 	 */
 	public void setSolveMaze(char solveMaze) {
 		this.solveMaze = solveMaze;
@@ -496,13 +489,11 @@ class MazeFrame extends JFrame {
 	}
 
 	/**
-	 * @param createMaze
-	 *            the createMaze to set
+	 * @param createMaze the createMaze to set
 	 */
 	public void setCreateMaze(char createMaze) {
 		this.createMaze = createMaze;
 	}
-
 
 	/**
 	 * @return the bgmStart
@@ -510,7 +501,6 @@ class MazeFrame extends JFrame {
 	public boolean isBgmStart() {
 		return bgmStart;
 	}
-
 
 	/**
 	 * @param bgmStart the bgmStart to set

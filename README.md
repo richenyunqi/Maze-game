@@ -1,6 +1,9 @@
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 **撒娇打滚求star哦\~\~ღ( ´･ᴗ･ \` )比心**
+
+本仓库代码是经过建议使用eclipse编译运行过的，一般情况下将本仓库代码下载下来之后，使用eclipse编译直接可以运行。
+
 # 软件总体设计
 ## 软件总体框架
 该软件主要分为如下三个模块：

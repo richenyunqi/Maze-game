@@ -3,9 +3,9 @@ package maze;
 import java.awt.Color;
 
 class Ball {
-	private int x;//æ¨ªåæ ‡
-	private int y;//çºµåæ ‡
-	private Color color;//å°çƒé¢œè‰²
+	private int x;//ºá×ø±ê
+	private int y;//×İ×ø±ê
+	private Color color;//Ğ¡ÇòÑÕÉ«
 	public Ball(int x,int y) {
 		setX(x);
 		setY(y);

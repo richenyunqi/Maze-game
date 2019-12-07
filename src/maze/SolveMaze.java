@@ -6,7 +6,7 @@ import java.util.*;
 abstract class AbstractSolveMaze {
 	protected Stack<Point> pathStack = null;
 
-	// éªŒè¯æ¨ªçºµåæ ‡æ˜¯å¦è¶…ç•Œ
+	// ÑéÖ¤ºá×İ×ø±êÊÇ·ñ³¬½ç
 	protected boolean isOutofBorder(int x, int y, int colNumber, int rowNumber) {
 		if ((x == 0 && y == 1) || (x == colNumber + 1 && y == rowNumber))
 			return false;
@@ -18,9 +18,9 @@ abstract class AbstractSolveMaze {
 }
 
 class DepthFirstSearchSolveMaze extends AbstractSolveMaze {
-	// æŒ‰æ·±åº¦ä¼˜å…ˆæœç´¢çš„æ–¹å¼é€‰æ‹©ä¸€ä¸ªpç‚¹æœªè®¿é—®çš„ç›¸é‚»è¿·å®«å•å…ƒ ,å¹¶å°†é€‰æ‹©çš„è¿™ä¸€å•å…ƒçš„visitedç½®trueï¼Œä¸ºsolveMaze()å‡½æ•°è°ƒç”¨
+	// °´Éî¶ÈÓÅÏÈËÑË÷µÄ·½Ê½Ñ¡ÔñÒ»¸öpµãÎ´·ÃÎÊµÄÏàÁÚÃÔ¹¬µ¥Ôª ,²¢½«Ñ¡ÔñµÄÕâÒ»µ¥ÔªµÄvisitedÖÃtrue£¬ÎªsolveMaze()º¯Êıµ÷ÓÃ
 	protected Point ArroundPointDepthFirst(Lattice[][] mazeLattice, Point p, int colNumber, int rowNumber) {
-		final int[] arroundPoint = { -1, 0, 1, 0, -1 };// ä¸€ä¸ªç‚¹å‘¨å›´å››ä¸ªç‚¹çš„åæ ‡å˜åŒ–ï¼Œé¡ºåºä¸ºå·¦ä¸Šå³ä¸‹
+		final int[] arroundPoint = { -1, 0, 1, 0, -1 };// Ò»¸öµãÖÜÎ§ËÄ¸öµãµÄ×ø±ê±ä»¯£¬Ë³ĞòÎª×óÉÏÓÒÏÂ
 		for (int i = 0; i < 4;) {
 			int x = p.x + arroundPoint[i];
 			int y = p.y + arroundPoint[++i];
@@ -69,7 +69,7 @@ class DepthFirstSearchSolveMaze extends AbstractSolveMaze {
 class BreadthFirstSearchSolveMaze extends AbstractSolveMaze {
 
 	protected Point[] ArroundPointBreadthFirst(Lattice[][] mazeLattice, Point p, int colNumber, int rowNumber) {
-		final int[] arroundPoint = { -1, 0, 1, 0, -1 };// ä¸€ä¸ªç‚¹å‘¨å›´å››ä¸ªç‚¹çš„åæ ‡å˜åŒ–ï¼Œé¡ºåºä¸ºå·¦ä¸Šå³ä¸‹
+		final int[] arroundPoint = { -1, 0, 1, 0, -1 };// Ò»¸öµãÖÜÎ§ËÄ¸öµãµÄ×ø±ê±ä»¯£¬Ë³ĞòÎª×óÉÏÓÒÏÂ
 		Point[] point = { null, null, null, null };
 		for (int i = 0; i < 4; ++i) {
 			int x = p.x + arroundPoint[i];
@@ -98,7 +98,7 @@ class BreadthFirstSearchSolveMaze extends AbstractSolveMaze {
 		Point currentPoint = entrance;
 		while (!currentPoint.equals(end)) {
 			Point[] p = ArroundPointBreadthFirst(mazeLattice, currentPoint, colNumber, rowNumber);
-			int count = 0;// å¯¹èƒ½å‹å…¥æ ˆä¸­çš„currentPointç‚¹å‘¨å›´çš„å››ä¸ªç‚¹ä¸­çš„ç‚¹è¿›è¡Œè®¡æ•°
+			int count = 0;// ¶ÔÄÜÑ¹ÈëÕ»ÖĞµÄcurrentPointµãÖÜÎ§µÄËÄ¸öµãÖĞµÄµã½øĞĞ¼ÆÊı
 			for (int i = 0; i < p.length; ++i)
 				if (p[i] != null) {
 					pathDeque.addLast(p[i]);

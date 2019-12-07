@@ -3,8 +3,8 @@ package maze;
 import java.awt.Point;
 
 class Lattice {
-	private boolean Passable;// å°çƒæ˜¯å¦èƒ½é€šè¿‡
-	private Point Father;//æ˜¯å¦éå†è¿‡
+	private boolean Passable;// Ğ¡ÇòÊÇ·ñÄÜÍ¨¹ı
+	private Point Father;//ÊÇ·ñ±éÀú¹ı
 	public Lattice() {
 		setPassable(false);
 		setFather(null);

@@ -1,23 +1,34 @@
 package maze;
 
-import java.util.*;
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import java.applet.Applet;
 import java.applet.AudioClip;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Stack;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 
 class Maze extends JPanel {
 	private Point entrance = null;
 	private Point exit = null;
-	private int rowNumber;// è¡Œæ•°
-	private int colNumber;// åˆ—æ•°
-	private int LatticeWidth;// æ ¼å­çš„å®½åº¦
+	private int rowNumber;// ĞĞÊı
+	private int colNumber;// ÁĞÊı
+	private int LatticeWidth;// ¸ñ×ÓµÄ¿í¶È
 	private Ball ball;
 	private Lattice[][] mazeLattice;
 	private boolean startTiming = false;
@@ -43,11 +54,11 @@ class Maze extends JPanel {
 		mazeLattice = new Lattice[getRowNumber() + 2][getColNumber() + 2];
 		setLayout(new BorderLayout(0, 0));
 		getTimeText().setForeground(Color.BLUE);
-		getTimeText().setFont(new Font("å®‹ä½“", Font.PLAIN, 14));
+		getTimeText().setFont(new Font("ËÎÌå", Font.PLAIN, 14));
 		getTimeText().setHorizontalAlignment(JTextField.CENTER);
 		stepNumberText.setEnabled(false);
 		getStepNumberText().setForeground(Color.BLUE);
-		getStepNumberText().setFont(new Font("å®‹ä½“", Font.PLAIN, 14));
+		getStepNumberText().setFont(new Font("ËÎÌå", Font.PLAIN, 14));
 		getStepNumberText().setHorizontalAlignment(JTextField.CENTER);
 		Label timeLabel = new Label("Time:"), stepLabel = new Label("StepNumber:");
 		timeLabel.setAlignment(Label.RIGHT);
@@ -97,7 +108,7 @@ class Maze extends JPanel {
 		mazeLattice[getExit().y][getExit().x].setPassable(true);
 	}
 
-	// æ˜¯å¦å·²ç»èµ°å‡ºè¿·å®«
+	// ÊÇ·ñÒÑ¾­×ß³öÃÔ¹¬
 	public boolean isWin() {
 		if (getExit().x == ball.getX() && getExit().y == ball.getY()) {
 			return true;
@@ -105,11 +116,11 @@ class Maze extends JPanel {
 		return false;
 	}
 
-	// å¦‚æœå·²ç»èµ°å‡ºè¿·å®«å³è·³å‡ºæ¸¸æˆç»“æŸå¯¹è¯æ¡†
+	// Èç¹ûÒÑ¾­×ß³öÃÔ¹¬¼´Ìø³öÓÎÏ·½áÊø¶Ô»°¿ò
 	private void GameOverMessage() {
 		((Timers) getTimeText()).stop();
 		try {
-			// è¯»å–å½“å‰javaå·¥ç¨‹é¡¹ç›®ä¸‹çš„yy.wavæ–‡ä»¶
+			// ¶ÁÈ¡µ±Ç°java¹¤³ÌÏîÄ¿ÏÂµÄyy.wavÎÄ¼ş
 			File file1 = new File("media//win.wav");
 			AudioClip sound = Applet.newAudioClip(file1.toURI().toURL());
 			sound.play();
@@ -123,7 +134,7 @@ class Maze extends JPanel {
 				"GameOver", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	// éªŒè¯æ¨ªçºµåæ ‡æ˜¯å¦è¶…ç•Œ
+	// ÑéÖ¤ºá×İ×ø±êÊÇ·ñ³¬½ç
 	private boolean isOutofBorder(int x, int y) {
 		if ((x == 0 && y == 1) || (x == getColNumber() + 1 && y == getRowNumber()))
 			return false;
@@ -131,7 +142,8 @@ class Maze extends JPanel {
 			return (x > getColNumber() || y > getRowNumber() || x < 1 || y < 1) ? true : false;
 	}
 
-	// ç»˜åˆ¶è¿·å®«
+	// »æÖÆÃÔ¹¬
+	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for (int i = 0; i < getRowNumber() + 2; ++i)
@@ -166,7 +178,7 @@ class Maze extends JPanel {
 		}
 	}
 
-	// è®¾ç½®é”®ç›˜ç›‘å¬å™¨
+	// ÉèÖÃ¼üÅÌ¼àÌıÆ÷
 	synchronized private void move(int c) {
 		int tx = ball.getX(), ty = ball.getY();
 		switch (c) {
@@ -184,8 +196,9 @@ class Maze extends JPanel {
 			break;
 		case KeyEvent.VK_ESCAPE:
 			System.exit(0);
+			break;
 		default:
-			// é˜²æ­¢æŒ‰é”®ç›˜ä¸Šå…¶ä»–é”®ä»ç„¶äº§ç”Ÿé”®ç›˜éŸ³æ•ˆã€ä½¿è®¡æ­¥å™¨é€’å¢
+			// ·ÀÖ¹°´¼üÅÌÉÏÆäËû¼üÈÔÈ»²úÉú¼üÅÌÒôĞ§¡¢Ê¹¼Æ²½Æ÷µİÔö
 			tx = 0;
 			ty = 0;
 			break;
@@ -212,6 +225,7 @@ class Maze extends JPanel {
 
 	private void setKeyListener() {
 		this.addKeyListener(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (!isWin()) {
 					int c = e.getKeyCode();
@@ -224,27 +238,27 @@ class Maze extends JPanel {
 		});
 	}
 
-	// å°†è®¡æ—¶å™¨å½’é›¶
+	// ½«¼ÆÊ±Æ÷¹éÁã
 	public void resetTimer() {
 		setStartTiming(false);
 		getTimeText().setText("00:00:00");
 		((Timers) timeText).restart();
 	}
 
-	// å°†è®¡æ­¥å™¨å½’é›¶
+	// ½«¼Æ²½Æ÷¹éÁã
 	public void resetStepNumber() {
 		setStepNmber(0);
 		stepNumberText.setText(Integer.toString(stepNmber));
 	}
 
-	// è®¾ç½®å°çƒçš„ä½ç½®
+	// ÉèÖÃĞ¡ÇòµÄÎ»ÖÃ
 	public void setBallPosition(Point p) {
 		ball.setX(p.x);
 		ball.setY(p.y);
 		repaint();
 	}
 
-	// å»ºç«‹ä¸€ä¸ªè¿·å®«
+	// ½¨Á¢Ò»¸öÃÔ¹¬
 	public void createMaze() {
 		init();
 		AbstractCreateMaze c = null;
@@ -258,7 +272,7 @@ class Maze extends JPanel {
 		repaint();
 	}
 
-	// æ‰¾å‡ºèµ°å‡ºè¿·å®«çš„è·¯å¾„
+	// ÕÒ³ö×ß³öÃÔ¹¬µÄÂ·¾¶
 	private Stack<Point> solveMaze(Point p) {
 		AbstractSolveMaze a = null;
 		if (getSolveMaze() == BreadthFirstSearchSolveMaze)
@@ -268,7 +282,7 @@ class Maze extends JPanel {
 		return a.solveMaze(mazeLattice, p, getExit(), getColNumber(), getRowNumber());
 	}
 
-	// æ‰¾å‡ºå°çƒä½äºç»™å®šä½ç½®æ—¶èµ°å‡ºè¿·å®«çš„è·¯å¾„
+	// ÕÒ³öĞ¡ÇòÎ»ÓÚ¸ø¶¨Î»ÖÃÊ±×ß³öÃÔ¹¬µÄÂ·¾¶
 	private Stack<Point> promptsolveMaze() {
 		AbstractSolveMaze a = null;
 		if (getSolveMaze() == BreadthFirstSearchSolveMaze)
@@ -278,10 +292,11 @@ class Maze extends JPanel {
 		return a.solveMaze(mazeLattice, new Point(ball.getX(), ball.getY()), getExit(), getColNumber(), getRowNumber());
 	}
 
-	// å°†å¤„äºç»™å®šä½ç½®çš„å°çƒèµ°å‡ºè¿·å®«çš„è·¯å¾„æ˜¾ç¤ºåœ¨è¿·å®«ä¸Šæ˜¾ç¤ºç»™å®šæ—¶é—´é•¿ï¼Œä»…ä¸ºcomputerSolveMazeForBallPosition()è°ƒç”¨
+	// ½«´¦ÓÚ¸ø¶¨Î»ÖÃµÄĞ¡Çò×ß³öÃÔ¹¬µÄÂ·¾¶ÏÔÊ¾ÔÚÃÔ¹¬ÉÏÏÔÊ¾¸ø¶¨Ê±¼ä³¤£¬½öÎªcomputerSolveMazeForBallPosition()µ÷ÓÃ
 	private void computerSolveMazeForBallPositionForTime(int time) {
 		if (getThread() == null)
 			setThread(new Thread() {
+				@Override
 				public void run() {
 					while (!isInterrupted())
 						try {
@@ -300,7 +315,7 @@ class Maze extends JPanel {
 		getThread().start();
 	}
 
-	// ä»¥timeæ—¶é—´æ˜¾ç¤ºå¤„äºç»™å®šä½ç½®å°çƒèµ°å‡ºè¿·å®«çš„è·¯å¾„
+	// ÒÔtimeÊ±¼äÏÔÊ¾´¦ÓÚ¸ø¶¨Î»ÖÃĞ¡Çò×ß³öÃÔ¹¬µÄÂ·¾¶
 	public boolean computerSolveMazeForBallPosition() {
 		setThreadStop();
 		((Timers) getTimeText()).stop();
@@ -335,7 +350,7 @@ class Maze extends JPanel {
 			return false;
 	}
 
-	// ä»¥speedé€Ÿåº¦ç”±è®¡ç®—æœºå°†å¤„äºåˆå§‹ä½ç½®çš„å°çƒèµ°å‡ºè¿·å®«ï¼Œä»…ä¸ºcomputerSolveMaze()å‡½æ•°è°ƒç”¨
+	// ÒÔspeedËÙ¶ÈÓÉ¼ÆËã»ú½«´¦ÓÚ³õÊ¼Î»ÖÃµÄĞ¡Çò×ß³öÃÔ¹¬£¬½öÎªcomputerSolveMaze()º¯Êıµ÷ÓÃ
 	private void computerSolveMazeForSpeed(int speed) {
 		setComputerDo(true);
 		Point p = null;
@@ -348,6 +363,7 @@ class Maze extends JPanel {
 		resetStepNumber();
 		if (getThread() == null)
 			setThread(new Thread() {
+				@Override
 				public void run() {
 					while (!isInterrupted())
 						try {
@@ -367,7 +383,7 @@ class Maze extends JPanel {
 		getThread().start();
 	}
 
-	// ç”±è®¡ç®—æœºå°†å¤„äºåˆå§‹ä½ç½®çš„å°çƒèµ°å‡ºè¿·å®«
+	// ÓÉ¼ÆËã»ú½«´¦ÓÚ³õÊ¼Î»ÖÃµÄĞ¡Çò×ß³öÃÔ¹¬
 	public boolean computerSolveMaze() {
 		int speed = 0;
 		setThreadStop();
@@ -420,8 +436,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param startTiming
-	 *            the startTiming to set
+	 * @param startTiming the startTiming to set
 	 */
 	public void setStartTiming(boolean startTiming) {
 		this.startTiming = startTiming;
@@ -435,8 +450,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param entrance
-	 *            the entrance to set
+	 * @param entrance the entrance to set
 	 */
 	public void setEntrance(Point entrance) {
 		this.entrance = entrance;
@@ -450,8 +464,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param exit
-	 *            the exit to set
+	 * @param exit the exit to set
 	 */
 	private void setExit(Point exit) {
 		this.exit = exit;
@@ -465,8 +478,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param computerDo
-	 *            the computerDo to set
+	 * @param computerDo the computerDo to set
 	 */
 	public void setComputerDo(boolean computerDo) {
 		this.computerDo = computerDo;
@@ -480,8 +492,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param thread
-	 *            the thread to set
+	 * @param thread the thread to set
 	 */
 	private void setThread(Thread thread) {
 		this.thread = thread;
@@ -511,8 +522,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param stepNmber
-	 *            the stepNmber to set
+	 * @param stepNmber the stepNmber to set
 	 */
 	public void setStepNmber(int stepNmber) {
 		this.stepNmber = stepNmber;
@@ -526,8 +536,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param rowNumber
-	 *            the rowNumber to set
+	 * @param rowNumber the rowNumber to set
 	 */
 	public void setRowNumber(int rowNumber) {
 		this.rowNumber = rowNumber;
@@ -541,8 +550,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param colNumber
-	 *            the colNumber to set
+	 * @param colNumber the colNumber to set
 	 */
 	public void setColNumber(int colNumber) {
 		this.colNumber = colNumber;
@@ -556,8 +564,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param solveMaze
-	 *            the solveMaze to set
+	 * @param solveMaze the solveMaze to set
 	 */
 	public void setSolveMaze(char solveMaze) {
 		this.solveMaze = solveMaze;
@@ -571,8 +578,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param createMaze
-	 *            the createMaze to set
+	 * @param createMaze the createMaze to set
 	 */
 	public void setCreateMaze(char createMaze) {
 		this.createMaze = createMaze;
@@ -586,8 +592,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param promptSolveMaze
-	 *            the promptSolveMaze to set
+	 * @param promptSolveMaze the promptSolveMaze to set
 	 */
 	public void setPromptSolveMaze(boolean promptSolveMaze) {
 		this.promptSolveMaze = promptSolveMaze;
@@ -601,8 +606,7 @@ class Maze extends JPanel {
 	}
 
 	/**
-	 * @param audioThread
-	 *            the audioThread to set
+	 * @param audioThread the audioThread to set
 	 */
 	private void setAudioThread(Thread audioThread) {
 		this.audioThread = audioThread;
@@ -611,6 +615,7 @@ class Maze extends JPanel {
 	public void setAudioThreadStart() {
 		if (getAudioThread() == null) {
 			setAudioThread(new Thread() {
+				@Override
 				@SuppressWarnings("restriction")
 				// private AudioStream as = null;
 
@@ -619,7 +624,7 @@ class Maze extends JPanel {
 					AudioClip sound = null;
 					while (!isInterrupted())
 						try {
-							// è¯»å–å½“å‰javaå·¥ç¨‹é¡¹ç›®ä¸‹çš„yy.wavæ–‡ä»¶
+							// ¶ÁÈ¡µ±Ç°java¹¤³ÌÏîÄ¿ÏÂµÄyy.wavÎÄ¼ş
 							File file1 = new File("media//background.wav");
 							sound = Applet.newAudioClip(file1.toURI().toURL());
 							sound.play();
