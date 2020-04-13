@@ -148,9 +148,9 @@ Depth First Search Algorithm 在由Recursive Division Algorithm生成的51行51�
 ### Breadth First Search Algorithm（广度优先搜索算法）
 #### 算法描述
 1. 访问入口顶点v，并以此顶点为当前顶点
-2. 将当前顶点的未被访问的邻接点压入栈中
-3. 弹栈，将弹出的顶点作为当前顶点
-4. 若当前顶点没有未被访问的邻接点且栈不空，重复第3步，否则重复第2步
+2. 将当前顶点的未被访问的邻接点逐个放入队列中
+3. 队首顶点出队，并作为当前顶点
+4. 若当前顶点没有未被访问的邻接点且队列不空，重复第3步，否则重复第2步
 5. 重复第3、4步，直至搜索到出口顶点
 #### 生成的路径特点：
  Breadth First Search Algorithm 在由Recursive Division Algorithm生成的51行51列迷宫中生成的路径如下图所示：
